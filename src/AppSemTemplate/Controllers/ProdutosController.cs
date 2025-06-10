@@ -5,6 +5,7 @@ using AppSemTemplate.Models;
 
 namespace AppSemTemplate.Controllers
 {
+    [Route("produtos")]
     public class ProdutosController : Controller
     {
         private readonly AppDbContext _context;
@@ -14,12 +15,12 @@ namespace AppSemTemplate.Controllers
             _context = context;
         }
 
-        // GET: Produtos
         public async Task<IActionResult> Index()
         {
             return View(await _context.Produtos.ToListAsync());
         }
 
+        [Route("detalhar/{id:int}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -37,14 +38,13 @@ namespace AppSemTemplate.Controllers
             return View(produto);
         }
 
-        // GET: Produtos/Create
+        [Route("novo")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Produtos/Create
-        [HttpPost]
+        [HttpPost("novo")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome,Imagem,Valor")] Produto produto)
         {
@@ -57,7 +57,7 @@ namespace AppSemTemplate.Controllers
             return View(produto);
         }
 
-        // GET: Produtos/Edit/5
+        [Route("editar/{id:int}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,8 +73,7 @@ namespace AppSemTemplate.Controllers
             return View(produto);
         }
 
-        // POST: Produtos/Edit/5
-        [HttpPost]
+        [HttpPost("editar/{id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Imagem,Valor")] Produto produto)
         {
@@ -106,7 +105,7 @@ namespace AppSemTemplate.Controllers
             return View(produto);
         }
 
-        // GET: Produtos/Delete/5
+        [Route("excluir/{id:int}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,8 +123,7 @@ namespace AppSemTemplate.Controllers
             return View(produto);
         }
 
-        // POST: Produtos/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost("excluir/{id:int}"), ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
