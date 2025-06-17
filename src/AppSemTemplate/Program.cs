@@ -21,7 +21,7 @@ app.UseStaticFiles();
 // Roteamento
 app.UseRouting();
 
-// Rota padr„o
+// Rota padr√£o
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -21,6 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Valor)
             </th>
+            <th>Ações</th>
             <th></th>
         </tr>
     </thead>
@@ -55,3 +56,8 @@
 }
     </tbody>
 </table>
+
+@* Invoca componente contador de registros*@
+@* 2 formas de fazer *@
+@* <vc:counter model-counter="@Model.Count()"></vc:counter> *@
+@await Component.InvokeAsync("Counter", Model.Count())
