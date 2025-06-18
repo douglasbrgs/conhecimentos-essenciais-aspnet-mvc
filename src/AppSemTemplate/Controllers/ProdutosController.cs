@@ -5,7 +5,7 @@ using AppSemTemplate.Models;
 
 namespace AppSemTemplate.Controllers
 {
-    //[Route("produtos")]
+    [Route("produtos")]
     public class ProdutosController : Controller
     {
         private readonly AppDbContext _context;
@@ -20,7 +20,7 @@ namespace AppSemTemplate.Controllers
             return View(await _context.Produtos.ToListAsync());
         }
 
-        //[Route("detalhar/{id:int}")]
+        [Route("detalhar/{id:int}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,13 +38,13 @@ namespace AppSemTemplate.Controllers
             return View(produto);
         }
 
-        //[Route("novo")]
+        [Route("criar-novo")]
         public IActionResult Create()
         {
             return View();
         }
 
-        [HttpPost()]
+        [HttpPost("criar-novo")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome,Imagem,Valor")] Produto produto)
         {
@@ -57,7 +57,7 @@ namespace AppSemTemplate.Controllers
             return View(produto);
         }
 
-        //[Route("editar/{id:int}")]
+        [Route("editar/{id:int}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,7 +73,7 @@ namespace AppSemTemplate.Controllers
             return View(produto);
         }
 
-        [HttpPost()]
+        [HttpPost("editar/{id:int}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Imagem,Valor")] Produto produto)
         {
@@ -105,7 +105,7 @@ namespace AppSemTemplate.Controllers
             return View(produto);
         }
 
-        //[Route("excluir/{id:int}")]
+        [Route("excluir/{id:int}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,7 +123,8 @@ namespace AppSemTemplate.Controllers
             return View(produto);
         }
 
-        [HttpPost(), ActionName("Delete")]
+        [HttpPost("excluir/{id:int}")]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

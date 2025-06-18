@@ -7,10 +7,12 @@ namespace AppSemTemplate.Extensions
     public class BotaoTagHelper : TagHelper
     {
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly LinkGenerator _linkGenerator;
 
-        public BotaoTagHelper(IHttpContextAccessor contextAccessor)
+        public BotaoTagHelper(IHttpContextAccessor contextAccessor, LinkGenerator linkGenerator)
         {
             _contextAccessor = contextAccessor;
+            _linkGenerator = linkGenerator;
         }
 
         [HtmlAttributeName("tipo-botao")]
@@ -46,9 +48,22 @@ namespace AppSemTemplate.Extensions
 
             var controller = _contextAccessor.HttpContext?.GetRouteData().Values["controller"]?.ToString();
 
+            // Protocolo + host
+            var host = $"{_contextAccessor.HttpContext.Request.Scheme}://" +
+                $"{_contextAccessor.HttpContext.Request.Host.Value}";
+
+            var indexPath = _linkGenerator.GetPathByAction(
+                    _contextAccessor.HttpContext,
+                    actionName,
+                    controller,
+                    values: new { id = RouteId }
+                )!;
+
             // Montando o link HTML
             output.TagName = "a";
-            output.Attributes.SetAttribute("href", $"{controller}/{actionName}/{RouteId}");
+
+            //output.Attributes.SetAttribute("href", $"{controller}/{actionName}/{RouteId}");
+            output.Attributes.SetAttribute("href", $"{host}{indexPath}");
             output.Attributes.SetAttribute("class", className);
 
             // Adicionando o span do icone

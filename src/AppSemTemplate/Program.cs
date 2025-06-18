@@ -1,10 +1,14 @@
 using AppSemTemplate.Data;
+using AppSemTemplate.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // MVC
 builder.Services.AddControllersWithViews();
+
+//builder.Services.AddRouting(options=>   
+//    options.ConstraintMap["slugfy"] = typeof(RouteSlugfyParameterTransformer));
 
 // Adiciona acessor do contexto http
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -20,6 +24,10 @@ app.UseStaticFiles();
 
 // Roteamento
 app.UseRouting();
+
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller:slugfy=Home}/{action:slugfy=Index}/{id?}");
 
 // Rota padrão
 app.MapControllerRoute(
