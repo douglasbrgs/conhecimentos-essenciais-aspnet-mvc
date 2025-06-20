@@ -5,7 +5,7 @@ using AppSemTemplate.Models;
 
 namespace AppSemTemplate.Controllers
 {
-    [Route("produtos")]
+    [Route("meus-produtos")]
     public class ProdutosController : Controller
     {
         private readonly AppDbContext _context;
