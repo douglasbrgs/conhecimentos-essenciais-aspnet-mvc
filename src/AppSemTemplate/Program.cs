@@ -1,5 +1,6 @@
 using AppSemTemplate.Data;
 using AppSemTemplate.Extensions;
+using AppSemTemplate.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,8 @@ builder.Services.Configure<RazorViewEngineOptions>(options =>
 
 // Adiciona acessor do contexto http
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddScoped<IOperacao, Operacao>();
 
 // Configura contexto de banco de dados
 builder.Services.AddDbContext<AppDbContext>(o =>
