@@ -6,18 +6,31 @@ namespace AppSemTemplate.Controllers
     [Route("teste-di")]
     public class DiLifeCyCleController : Controller
     {
-        public IOperacao Operacao { get; private set; }
-
-        public DiLifeCyCleController(IOperacao operacao)
+        public OperacaoService OperacaoService { get; private set; }
+        public OperacaoService OperacaoService2 { get; private set; }
+        public DiLifeCyCleController(OperacaoService operacaoService,
+                                     OperacaoService operacaoService2)
         {
-            Operacao = operacao;
+            OperacaoService = operacaoService;
+            OperacaoService2 = operacaoService2;
         }
 
-        public IActionResult Index()
+        public string Index()
         {
-            var teste = Operacao;
+            return
+                "Primeira instância: " + Environment.NewLine +
+                OperacaoService.Transient.OperacaoId + Environment.NewLine +
+                OperacaoService.Scoped.OperacaoId + Environment.NewLine +
+                OperacaoService.Singleton.OperacaoId + Environment.NewLine +
+                OperacaoService.SingletonInstance.OperacaoId + Environment.NewLine +
 
-            return View();
+                Environment.NewLine + Environment.NewLine +
+
+                "Segunda instância: " + Environment.NewLine +
+                OperacaoService2.Transient.OperacaoId + Environment.NewLine +
+                OperacaoService2.Scoped.OperacaoId + Environment.NewLine +
+                OperacaoService2.Singleton.OperacaoId + Environment.NewLine +
+                OperacaoService2.SingletonInstance.OperacaoId + Environment.NewLine;
         }
     }
 }
