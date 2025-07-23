@@ -65,4 +65,14 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Acessando O container DI
+using (var serviceScope = app.Services.CreateScope())
+{
+    var services = serviceScope.ServiceProvider;
+
+    var singService = services.GetRequiredService<IOperacaoSingleton>();
+
+    Console.WriteLine("Direto do Program.cs: " + singService.OperacaoId);
+}
+
 app.Run();
