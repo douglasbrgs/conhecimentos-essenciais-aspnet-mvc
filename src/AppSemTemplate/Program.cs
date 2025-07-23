@@ -45,7 +45,27 @@ builder.Services.AddTransient<OperacaoService>();
 builder.Services.AddDbContext<AppDbContext>(o =>
     o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+#region HSTS
+builder.Services.AddHsts(options =>
+{
+    options.Preload = true;
+    options.IncludeSubDomains = true;
+    options.MaxAge = TimeSpan.FromDays(60);
+    options.ExcludedHosts.Add("example.com");
+    options.ExcludedHosts.Add("www.example.com");
+});
+#endregion
+
 var app = builder.Build();
+
+#region HSTS e HTTPS
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+#endregion
 
 // Acesso a arquivos estaticos
 app.UseStaticFiles();
