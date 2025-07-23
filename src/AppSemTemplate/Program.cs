@@ -1,10 +1,9 @@
 using AppSemTemplate.Data;
-using AppSemTemplate.Extensions;
 using AppSemTemplate.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +55,13 @@ builder.Services.AddHsts(options =>
 });
 #endregion
 
+#region Configurando o Identity
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+}).AddEntityFrameworkStores<AppDbContext>();
+#endregion
+
 var app = builder.Build();
 
 #region HSTS e HTTPS
@@ -72,6 +78,8 @@ app.UseStaticFiles();
 
 // Roteamento
 app.UseRouting();
+
+app.UseAuthorization();
 
 //app.MapControllerRoute(
 //    name: "default",
@@ -91,6 +99,8 @@ app.MapAreaControllerRoute("AreaVendas", "Vendas", "Vendas/{controller=Gestao}/{
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 // Acessando O container DI
 using (var serviceScope = app.Services.CreateScope())
