@@ -17,7 +17,7 @@ namespace AppSemTemplate.Controllers
             _context = context;
         }
 
-        [AllowAnonymous]
+        [Authorize(Policy = "VerProdutos")]
         public async Task<IActionResult> Index()
         {
             var user = HttpContext.User.Identity;
@@ -26,6 +26,7 @@ namespace AppSemTemplate.Controllers
         }
 
         [Route("detalhar/{id:int}")]
+        [Authorize(Policy = "VerProdutos")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
