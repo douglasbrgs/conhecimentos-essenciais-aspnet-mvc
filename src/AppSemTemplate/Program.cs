@@ -59,8 +59,14 @@ builder.Services.AddHsts(options =>
 builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
-}).AddEntityFrameworkStores<AppDbContext>();
+}).AddRoles<IdentityRole>()
+  .AddEntityFrameworkStores<AppDbContext>();
 #endregion
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("PodeExcluir", policy => policy.RequireRole("Admin"));
+});
 
 var app = builder.Build();
 
