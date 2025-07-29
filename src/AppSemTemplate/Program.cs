@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,8 +66,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 
 builder.Services.AddAuthorization(options =>
 {
+    // Autorizacao por papel (role)
     options.AddPolicy("PodeExcluir", policy => policy.RequireRole("Admin"));
 
+    // Autorizacao por claim (ação)
     options.AddPolicy("VerProdutos", policy => policy.RequireClaim("Produtos", "VI"));
 });
 
