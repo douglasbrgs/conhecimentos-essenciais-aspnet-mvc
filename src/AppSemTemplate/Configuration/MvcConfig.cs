@@ -47,6 +47,10 @@ namespace AppSemTemplate.Configuration
             });
             #endregion
 
+            // Lendo arquivo de configuracao via options
+            builder.Services.Configure<ApiConfiguration>(
+                            builder.Configuration.GetSection(ApiConfiguration.ConfigName));
+
             return builder;
         }
 
