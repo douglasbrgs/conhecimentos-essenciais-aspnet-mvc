@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 
 namespace AppSemTemplate.Controllers
 {
@@ -6,6 +7,8 @@ namespace AppSemTemplate.Controllers
     {
         public ActionResult Index()
         {
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
             return View();
         }
     }

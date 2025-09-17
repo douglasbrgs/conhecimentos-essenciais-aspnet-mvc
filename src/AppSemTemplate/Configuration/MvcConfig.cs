@@ -10,6 +10,13 @@ namespace AppSemTemplate.Configuration
     {
         public static WebApplicationBuilder AddMvcConfiguration(this WebApplicationBuilder builder)
         {
+            // Formalizando arquivos de configuração
+            builder.Configuration
+                .SetBasePath(builder.Environment.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", true, true)
+                .AddEnvironmentVariables();
+
             //Proteção contra CSRF
             builder.Services.AddControllersWithViews(options =>
             {
