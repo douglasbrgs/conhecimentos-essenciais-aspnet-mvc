@@ -58,14 +58,25 @@ namespace AppSemTemplate.Configuration
 
         public static WebApplication UseMvcConfiguration(this WebApplication app)
         {
-            #region HSTS e HTTPS
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
             {
+                // Pagina de erro amigavel para desenvolvedor
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                // Intercepta excecoes nao tratadas e redireciona para endpoint
+                app.UseExceptionHandler("/error/500");
+
+                // Intercepta resposta http de falha e redireciona para endpoint
+                // O placeholder carrega o status code atual
+                app.UseStatusCodePagesWithRedirects("/error/{0}");
+
                 app.UseHsts();
             }
 
+            // Forca https
             app.UseHttpsRedirection();
-            #endregion
 
             // Acesso a arquivos estaticos
             app.UseStaticFiles();
