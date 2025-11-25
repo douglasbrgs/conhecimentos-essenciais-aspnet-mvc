@@ -75,6 +75,10 @@ namespace AppSemTemplate.Configuration
                 app.UseHsts();
             }
 
+            // Log de erro
+            app.UseElmahIo();
+            app.UseElmahIoExtensionsLogging();
+
             // Forca https
             app.UseHttpsRedirection();
 
